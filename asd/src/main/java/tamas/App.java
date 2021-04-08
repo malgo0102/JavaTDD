@@ -6,12 +6,13 @@ public class App {
     static Scanner sc = new Scanner(System.in);
     private static int N = 8;
     private static String[][] board = fillTable(N, "*");
+    static int column;
 
     public static void main(String[] args) {
         setup();
-        printTable();
-        place(0);
-        printTable();
+        // printTable();
+        if (place(0))
+            printTable();
 
     }
 
@@ -19,7 +20,7 @@ public class App {
         System.out.println("Set up the position for the first queen:\nRow number:");
         int row = sc.nextInt() - 1;
         System.out.println("Column number:");
-        int column = sc.nextInt() - 1;
+        column = sc.nextInt() - 1;
         board[row][column] = "Q";
     }
 
@@ -96,13 +97,10 @@ public class App {
         return true;
     }
 
-    public static boolean isSafe(int row, int col){
-        if (!leftsiderow(board,row,col) ||
-                !rightsiderow(board,row,col) ||
-                !upRightDiagonal(board,row,col) ||
-                !upLeftDiagonal(board,row,col) ||
-                !downLeftDiagonal(board,row,col) ||
-                !downRightDiagonal(board,row,col))
+    public static boolean isSafe(int row, int col) {
+        if (!leftsiderow(board, row, col) || !rightsiderow(board, row, col) || !upRightDiagonal(board, row, col)
+                || !upLeftDiagonal(board, row, col) || !downLeftDiagonal(board, row, col)
+                || !downRightDiagonal(board, row, col))
             return false;
         else
             return true;
@@ -111,27 +109,27 @@ public class App {
     public static boolean place(int col) {
         if (col >= N)
             return true;
-        for(int row = col; row < N; row++) {
-            if (board[row][col] == "Q")
-                if (place(col+1))
-                    return true;
-                else
-                    return false;
-        }
-        for(int row=0; row < N; row++){
-            if(isSafe(row,col)){
-                board[row][col] = "Q";
-                if(place(col+1))
-                    return true;
-                else
-
-                    //take off queen
-                    return false;
-            }
+        if (col == column) {
+            if (place(col + 1))
+                return true;
             else
                 return false;
         }
-        return true;
+
+        for (int row = 0; row < N; row++) {
+            if (isSafe(row, col)) {
+                board[row][col] = "Q";
+                if (place(col + 1))
+                    return true;
+                else {
+                    // take off queen
+                    board[row][col] = "*";
+                }
+
+            }
+
+        }
+        return false;
     }
 
 }
