@@ -125,7 +125,7 @@ public class App {
                     return true;
                 else
 
-                    //board[row][col] = "*";
+                    //take off queen
                     return false;
             }
             else
