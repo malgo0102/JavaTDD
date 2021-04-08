@@ -10,11 +10,6 @@ import org.junit.Test;
 public class AppTest {
 
     @Test
-    public void addTest() {
-        Assert.assertEquals(3, App.add(1, 2));
-    }
-
-    @Test
     public void test_fillTable() {
         int n = 8;
         String[][] board = App.fillTable(n, "*");
@@ -155,7 +150,7 @@ public class AppTest {
         board[5][5] = "*";
         board[4][4] = "*";
         // Act
-        boolean actual = App.DownRightDiagonal(board, 4, 4);
+        boolean actual = App.downRightDiagonal(board, 4, 4);
 
         // Assert
         Assert.assertTrue(actual);
@@ -168,7 +163,7 @@ public class AppTest {
         board[7][7] = "Q";
 
         // Act
-        boolean actual = App.DownRightDiagonal(board, 0, 0);
+        boolean actual = App.downRightDiagonal(board, 0, 0);
 
         // Assert
         Assert.assertFalse(actual);
