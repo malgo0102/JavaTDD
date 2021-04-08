@@ -9,7 +9,9 @@ public class App {
 
     public static void main(String[] args) {
         setup();
-        // printTable();
+        printTable();
+        place(0);
+        printTable();
 
     }
 
@@ -37,12 +39,14 @@ public class App {
     }
 
     public static void printTable() {
+        System.out.println();
         for (int i = 0; i < N; i++) {
             for (int j = 0; j < N; j++) {
                 System.out.print(board[i][j] + " ");
             }
             System.out.println();
         }
+        System.out.println();
 
     }
 
@@ -85,10 +89,48 @@ public class App {
         return true;
     }
 
-    public static boolean DownRightDiagonal(String[][] board, int row, int col) {
+    public static boolean downRightDiagonal(String[][] board, int row, int col) {
         for (int i = row, j = col; j < board.length && i < board.length; i++, j++)
             if (board[i][j] == "Q")
                 return false;
+        return true;
+    }
+
+    public static boolean isSafe(int row, int col){
+        if (!leftsiderow(board,row,col) ||
+                !rightsiderow(board,row,col) ||
+                !upRightDiagonal(board,row,col) ||
+                !upLeftDiagonal(board,row,col) ||
+                !downLeftDiagonal(board,row,col) ||
+                !downRightDiagonal(board,row,col))
+            return false;
+        else
+            return true;
+    }
+
+    public static boolean place(int col) {
+        if (col >= N)
+            return true;
+        for(int row = col; row < N; row++) {
+            if (board[row][col] == "Q")
+                if (place(col+1))
+                    return true;
+                else
+                    return false;
+        }
+        for(int row=0; row < N; row++){
+            if(isSafe(row,col)){
+                board[row][col] = "Q";
+                if(place(col+1))
+                    return true;
+                else
+
+                    //board[row][col] = "*";
+                    return false;
+            }
+            else
+                return false;
+        }
         return true;
     }
 
